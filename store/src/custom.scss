@@ -1,0 +1,5 @@
+// Override default variables before the import
+$main-font: 'Oswald', sans-serif;
+$success: red;
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';

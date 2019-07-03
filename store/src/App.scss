@@ -1,0 +1,28 @@
+@import "./custom.scss";
+
+  $mainBlue: #2a2a72;
+  $lightBlue: #009ffd;
+  $mainWhite: #f3f3f3;
+  $mainDark: #232528;
+  $mainYellow: #ffa400;
+
+
+body {
+  font-family: $main-font;
+  background: $mainWhite;
+  color: $mainDark;
+}
+
+.text-title {
+  font-family: 'Permanent Marker', cursive;
+  letter-spacing: .3rem;
+  text-transform: uppercase;
+}
+
+.text-blue{
+  color: $mainBlue;
+}
+
+.text-bright {
+  color: $lightBlue;
+}
