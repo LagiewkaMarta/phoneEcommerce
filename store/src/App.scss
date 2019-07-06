@@ -26,3 +26,9 @@ body {
 .text-bright {
   color: $lightBlue;
 }
+
+:export {
+mainBlue: $mainBlue;
+lightBlue: $lightBlue;
+mainWhite: $mainWhite;
+}
