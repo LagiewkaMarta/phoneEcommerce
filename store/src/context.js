@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import {storeProducts, detailProduct} from "./data";
 const ProductContext = React.createContext();
 //Provider
-//Consumer
 class ProductProvider extends Component {
     state = {
         products: storeProducts,
         detailProduct
     }
-
+    
     handleDetail = () => {
         console.log('i am handling the detail')
     }
-
+    
     addToCart = () => {
         console.log('i am adding to cart')
     }
-
+    
     render() {
         return (
             <ProductContext.Provider value={{...this.state, handleDetail: this.handleDetail, addToCart: this.addToCart}}>
@@ -26,6 +25,7 @@ class ProductProvider extends Component {
     }
 }
 
+//Consumer
 const ProductConsumer = ProductContext.Consumer;
 
 export {ProductProvider, ProductConsumer};
