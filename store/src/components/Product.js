@@ -17,7 +17,7 @@ export default class Product extends Component {
               console.log("you clicked me image container from Product.js")
             }
           >
-            <Link to="/details">
+            <Link to={`/details`}>
               <img src={img} alt="product" className="card-img-top" />
             </Link>
             <button

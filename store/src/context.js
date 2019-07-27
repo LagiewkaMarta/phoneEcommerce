@@ -20,18 +20,21 @@ class ProductProvider extends Component {
   handleDetail = () => {
     console.log("i am handling the detail");
   };
-  addToCart = () => {
-    console.log("i am adding to cart");
+  addToCart = (id) => {
+    console.log("i am adding to cart", id);
   };
   test = () => {
     console.log("state", this.state.products[5].inCart);
     console.log("data", storeProducts[5].inCart);
     const temp = [...this.state.products];
     temp[5].inCart = true;
-    this.setState(() => ({ products: temp }), () => {
-      console.log("state", this.state.products[5].inCart);
-      console.log("data", storeProducts[5].inCart);
-    });
+    this.setState(
+      () => ({ products: temp }),
+      () => {
+        console.log("state", this.state.products[5].inCart);
+        console.log("data", storeProducts[5].inCart);
+      }
+    );
   };
 
   render() {
@@ -43,7 +46,7 @@ class ProductProvider extends Component {
           addToCart: this.addToCart
         }}
       >
-          <button onClick={this.test}>please send hepl</button>
+        {/* <button onClick={this.test}>please send hepl</button> */}
         {this.props.children}
       </ProductContext.Provider>
     );
