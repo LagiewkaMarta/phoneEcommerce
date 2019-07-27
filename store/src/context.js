@@ -17,25 +17,33 @@ class ProductProvider extends Component {
   componentDidMount() {
     this.setProducts();
   }
-  handleDetail = () => {
-    console.log("i am handling the detail");
+
+  getItem = (id) => (
+     this.state.products.find(item => item.id === id)
+  )
+  handleDetail = (id) => {
+    const product = this.getItem(id);
+    this.setState({
+      detailProduct:product
+    })
   };
   addToCart = (id) => {
     console.log("i am adding to cart", id);
   };
-  test = () => {
-    console.log("state", this.state.products[5].inCart);
-    console.log("data", storeProducts[5].inCart);
-    const temp = [...this.state.products];
-    temp[5].inCart = true;
-    this.setState(
-      () => ({ products: temp }),
-      () => {
-        console.log("state", this.state.products[5].inCart);
-        console.log("data", storeProducts[5].inCart);
-      }
-    );
-  };
+
+  // test = () => {
+  //   console.log("state", this.state.products[5].inCart);
+  //   console.log("data", storeProducts[5].inCart);
+  //   const temp = [...this.state.products];
+  //   temp[5].inCart = true;
+  //   this.setState(
+  //     () => ({ products: temp }),
+  //     () => {
+  //       console.log("state", this.state.products[5].inCart);
+  //       console.log("data", storeProducts[5].inCart);
+  //     }
+  //   );
+  // };
 
   render() {
     return (

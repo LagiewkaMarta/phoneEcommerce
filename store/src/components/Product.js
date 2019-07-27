@@ -3,6 +3,7 @@ import styled from "styled-components";
 import styles from "../App.scss";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { ProductConsumer } from "../context";
 // import { ProductConsumer } from "../context";
 
 export default class Product extends Component {
@@ -11,31 +12,37 @@ export default class Product extends Component {
     return (
       <ProductWrapper className="col-9 mx-auto com-md-6 col-lg-3">
         <div className="card">
-          <div
-            className="img-container p-5"
-            onClick={() =>
-              console.log("you clicked me image container from Product.js")
-            }
-          >
-            <Link to={`/details`}>
-              <img src={img} alt="product" className="card-img-top" />
-            </Link>
-            <button
-              className="cart-btn"
-              disabled={inCart}
-              onClick={() => {
-                console.log("Added to the cart");
-              }}
-            >
-              {inCart ? (
-                <p className="text-capitalize mb-0" disabled>
-                  In cart
-                </p>
-              ) : (
-                <i className="fas fa-cart-plus" />
-              )}
-            </button>
-          </div>
+
+
+          <ProductConsumer>
+            {(value) => (
+                <div
+                className="img-container p-5"
+                onClick={ () => value.handleDetail(id)
+                }
+                >
+                <Link to={`/details`}>
+                  <img src={img} alt="product" className="card-img-top" />
+                </Link>
+                <button
+                  className="cart-btn"
+                  disabled={inCart}
+                  onClick={() => {
+                    console.log("Added to the cart");
+                  }}
+                  >
+                  {inCart ? (
+                    <p className="text-capitalize mb-0" disabled>
+                      In cart
+                    </p>
+                  ) : (
+                    <i className="fas fa-cart-plus" />
+                    )}
+                </button>
+              </div>
+            )}
+        
+                </ProductConsumer>
           {/* card footer */}
           <footer className="card-footer d-flex justify-content-between">
             <p className="align-self-center mb-0">{title}</p>
