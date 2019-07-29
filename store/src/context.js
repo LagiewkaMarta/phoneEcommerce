@@ -6,7 +6,9 @@ class ProductProvider extends Component {
   state = {
     products: storeProducts,
     detailProduct,
-    cart: []
+    cart: [],
+    modalOpen: true,
+    modalProduct: detailProduct
   };
 
   setProducts = () => {
@@ -20,6 +22,7 @@ class ProductProvider extends Component {
   }
 
   getItem = id => this.state.products.find(item => item.id === id);
+
   handleDetail = id => {
     const product = this.getItem(id);
     this.setState({
@@ -35,20 +38,32 @@ class ProductProvider extends Component {
         ? { ...el, inCart: true, count: 1, price: el.price, total: el.price }
         : el
     );
-    console.log(copy[index]);
     this.setState({
       products: copy,
       cart: [...this.state.cart, copy[index]]
     });
   };
 
+  openModal = id => {
+    const product = this.getItem(id);
+    this.setState({
+      modalProduct: product, modalOpen: true
+    })
+  }
+  closeModal = () => {
+    this.setState({
+      modalOpen: false
+    })
+  }
   render() {
     return (
       <ProductContext.Provider
         value={{
           ...this.state,
           handleDetail: this.handleDetail,
-          addToCart: this.addToCart
+          addToCart: this.addToCart,
+          openModal: this.openModal,
+          closeModal: this.closeModal
         }}
       >
         {this.props.children}

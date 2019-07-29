@@ -12,35 +12,34 @@ export default class Product extends Component {
     return (
       <ProductWrapper className="col-9 mx-auto com-md-6 col-lg-3">
         <div className="card">
-
-
           <ProductConsumer>
-            {(value) => (
-                <div
+            {value => (
+              <div
                 className="img-container p-5"
-                onClick={ () => value.handleDetail(id)
-                }
-                >
+                onClick={() => value.handleDetail(id)}
+              >
                 <Link to={`/details`}>
                   <img src={img} alt="product" className="card-img-top" />
                 </Link>
                 <button
                   className="cart-btn"
                   disabled={inCart}
-                  onClick={() => value.addToCart(id)}
-                  >
+                  onClick={() => {
+                    value.addToCart(id);
+                    value.openModal(id);
+                  }}
+                >
                   {inCart ? (
                     <p className="text-capitalize mb-0" disabled>
                       In cart
                     </p>
                   ) : (
                     <i className="fas fa-cart-plus" />
-                    )}
+                  )}
                 </button>
               </div>
             )}
-        
-                </ProductConsumer>
+          </ProductConsumer>
           {/* card footer */}
           <footer className="card-footer d-flex justify-content-between">
             <p className="align-self-center mb-0">{title}</p>
