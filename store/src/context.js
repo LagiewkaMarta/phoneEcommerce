@@ -5,7 +5,8 @@ const ProductContext = React.createContext();
 class ProductProvider extends Component {
   state = {
     products: storeProducts,
-    detailProduct
+    detailProduct,
+    cart: []
   };
 
   setProducts = () => {
@@ -18,32 +19,28 @@ class ProductProvider extends Component {
     this.setProducts();
   }
 
-  getItem = (id) => (
-     this.state.products.find(item => item.id === id)
-  )
-  handleDetail = (id) => {
+  getItem = id => this.state.products.find(item => item.id === id);
+  handleDetail = id => {
     const product = this.getItem(id);
     this.setState({
-      detailProduct:product
-    })
+      detailProduct: product
+    });
   };
-  addToCart = (id) => {
-    console.log("i am adding to cart", id);
+  addToCart = id => {
+    const tempItems = [...this.state.products];
+    const prod = this.getItem(id);
+    const index = tempItems.indexOf(prod);
+    const copy = tempItems.map(el =>
+      el.id === id
+        ? { ...el, inCart: true, count: 1, price: el.price, total: el.price }
+        : el
+    );
+    console.log(copy[index]);
+    this.setState({
+      products: copy,
+      cart: [...this.state.cart, copy[index]]
+    });
   };
-
-  // test = () => {
-  //   console.log("state", this.state.products[5].inCart);
-  //   console.log("data", storeProducts[5].inCart);
-  //   const temp = [...this.state.products];
-  //   temp[5].inCart = true;
-  //   this.setState(
-  //     () => ({ products: temp }),
-  //     () => {
-  //       console.log("state", this.state.products[5].inCart);
-  //       console.log("data", storeProducts[5].inCart);
-  //     }
-  //   );
-  // };
 
   render() {
     return (
@@ -54,7 +51,6 @@ class ProductProvider extends Component {
           addToCart: this.addToCart
         }}
       >
-        {/* <button onClick={this.test}>please send hepl</button> */}
         {this.props.children}
       </ProductContext.Provider>
     );
