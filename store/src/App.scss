@@ -27,6 +27,24 @@ body {
   color: $lightBlue;
 }
 
+.btn-black {
+  background: transparent;
+  text-transform: capitalize;
+  font-size: .8rem !important;
+  color: $mainDark;
+  border-radius: 0 !important;
+  border: .1rem solid $mainDark !important;
+}
+.btn-black:hover {
+  background: $mainDark !important;
+  color: $mainWhite !important;
+}
+
+.cart-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: $mainYellow;
+}
 :export {
 mainBlue: $mainBlue;
 lightBlue: $lightBlue;
