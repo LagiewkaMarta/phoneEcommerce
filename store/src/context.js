@@ -24,7 +24,11 @@ class ProductProvider extends Component {
     this.setProducts();
   }
 
-  getItem = id => this.state.products.find(item => item.id === id);
+  getItem = id => {
+    let result = this.state.products.find(item => item.id === id);
+
+    return result;
+  };
 
   handleDetail = id => {
     const product = this.getItem(id);
@@ -41,10 +45,13 @@ class ProductProvider extends Component {
         ? { ...el, inCart: true, count: 1, price: el.price, total: el.price }
         : el
     );
-    this.setState({
-      products: copy,
-      cart: [...this.state.cart, copy[index]]
-    }, () => this.addTotals());
+    this.setState(
+      {
+        products: copy,
+        cart: [...this.state.cart, copy[index]]
+      },
+      () => this.addTotals()
+    );
   };
 
   openModal = id => {
@@ -67,12 +74,28 @@ class ProductProvider extends Component {
     console.log("this is decremet");
   };
   removeItem = id => {
-    console.log("this is remove");
+    let tempProducts = [...this.state.products].map(el => ({...el}));
+    let tempCart = [...this.state.cart].map(el=> ({...el}));
+    tempCart = tempCart.filter(item => item.id !== id);
+    let removedProduct = tempProducts.filter(el => el.id === id)[0];
+    removedProduct.inCart = false;
+    removedProduct.count = 0;
+    removedProduct.total = 0;
+    this.setState({
+      cart: [...tempCart],
+      products: [...tempProducts]
+    }, this.addTotals)
   };
   clearCart = () => {
-    this.setState({
-      cart: []
-    }, () => { this.setProducts(); this.addTotals()})
+    this.setState(
+      {
+        cart: []
+      },
+      () => {
+        this.setProducts();
+        this.addTotals();
+      }
+    );
   };
   addTotals = () => {
     let subTotal = 0;
@@ -88,7 +111,7 @@ class ProductProvider extends Component {
       cartSubtotal: subTotal,
       cartTax: tax,
       cartTotal: total
-    })
+    });
   };
   render() {
     return (
