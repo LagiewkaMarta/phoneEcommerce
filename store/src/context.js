@@ -69,17 +69,28 @@ class ProductProvider extends Component {
 
   increment = id => {
     let tempCart = [...this.state.cart].map(el=> ({...el}));
-    // tempCart = tempCart.filter(item => item.id !== id);
-    let incrementedProduct = tempCart.filter(el => el.id === id)[0];
-    incrementedProduct.count = incrementedProduct.count + 1;
-    incrementedProduct.total= incrementedProduct.count * incrementedProduct.price;
-    console.log(incrementedProduct)
+    let tempProduct = tempCart.filter(el => el.id === id)[0];
+    tempProduct.count++;
+    tempProduct.total= tempProduct.count * tempProduct.price;
     this.setState({
       cart: [...tempCart]
     }, this.addTotals)
   };
   decrement = id => {
-    console.log("this is decremet");
+    let tempCart = [...this.state.cart].map(el=> ({...el}));
+    let tempProduct = tempCart.filter(el => el.id === id)[0];
+    if (tempProduct.count > 1){
+    tempProduct.count--;
+    tempProduct.total= tempProduct.count * tempProduct.price;
+    this.setState({
+      cart: [...tempCart]
+    }, this.addTotals)
+    } else {
+      tempProduct.count = 0;
+      tempProduct.total = 0;
+      this.removeItem(id)
+    }
+    
   };
   removeItem = id => {
     let tempProducts = [...this.state.products].map(el => ({...el}));
@@ -106,18 +117,14 @@ class ProductProvider extends Component {
     );
   };
   addTotals = () => {
-    let subTotal = 0;
-    // subTotal = this.state.cart.reduce((acc,curr) => { return acc + (curr.price * curr.count)}, 0);
-    // this.setState({
-    //   cartSubtotal:subTotal
-    // })
-    this.state.cart.map(item => (subTotal += item.total));
-    const tempTax = subTotal * 0.1;
-    const tax = parseFloat(tempTax.toFixed());
-    const total = subTotal + tax;
+    let cartSubtotal = 0;
+    this.state.cart.map(item => (cartSubtotal += item.total));
+    const tempTax = cartSubtotal * 0.1;
+    const cartTax = parseFloat(tempTax.toFixed());
+    const total = cartSubtotal + cartTax;
     this.setState({
-      cartSubtotal: subTotal,
-      cartTax: tax,
+      cartSubtotal,
+      cartTax,
       cartTotal: total
     });
   };
