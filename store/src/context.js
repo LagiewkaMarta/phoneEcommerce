@@ -105,6 +105,7 @@ class ProductProvider extends Component {
       products: [...tempProducts]
     }, this.addTotals)
   };
+  
   clearCart = () => {
     this.setState(
       {
@@ -121,11 +122,11 @@ class ProductProvider extends Component {
     this.state.cart.map(item => (cartSubtotal += item.total));
     const tempTax = cartSubtotal * 0.1;
     const cartTax = parseFloat(tempTax.toFixed());
-    const total = cartSubtotal + cartTax;
+    const cartTotal = cartSubtotal + cartTax;
     this.setState({
       cartSubtotal,
       cartTax,
-      cartTotal: total
+      cartTotal
     });
   };
   render() {
